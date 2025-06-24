@@ -1,12 +1,17 @@
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.*;
+
 import utils.Constants;
+
+import java.awt.BorderLayout;
+import java.awt.FontMetrics;
 
 public class TextEditor extends JPanel  implements KeyListener{
 
@@ -34,16 +39,28 @@ public class TextEditor extends JPanel  implements KeyListener{
         this.setOpaque(true);
         this.setBackground(Color.white);
         this.setBorder(null);
-        //this.setBounds(0,0,Constants.PANEL_WIDTH, Constants.PANEL_HEIGHT);
-        frame.add(this);
+        JScrollPane scroll = new JScrollPane(this);
+        scroll.setBorder(null);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+        frame.setLayout(new BorderLayout());
+        frame.add(scroll,BorderLayout.CENTER);
         frame.setSize(Constants.PANEL_WIDTH, Constants.PANEL_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         this.requestFocusInWindow(); // Ensure the editor has focus to receive key events
     }
 
-    
+    @Override
+    public Dimension getPreferredSize() {
+        int width = this.getWidth();
+        int height = this.getHeight();
+        if(this.getWidth() < textArea.getWidth()){
+            width = textArea.getWidth();
+        }
+        return new Dimension(width, height);
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {}
 
@@ -57,10 +74,10 @@ public class TextEditor extends JPanel  implements KeyListener{
     public void keyReleased(KeyEvent e) {}
 
     @Override
-    public void paint(Graphics g) {        
-        super.paint(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); 
         cursor.paint(g);
         textArea.paint(g);
-    
     }
+    
 }

@@ -34,19 +34,32 @@ public class TextArea{
             textArea.addText(text,y);
         }
         text = textArea.getText(y);
-        
+
+        cursor.setCursorHeight(getHeight());
+        cursor.setCursorPosition(getWidth()+Constants.CELL_WIDTH+2, (getHeight()*y)+5);
+    }
+
+    
+    public Integer getWidth(){
         String lineText = textArea.getText(y);
-        int cursorX = fm.stringWidth(lineText.substring(0, textArea.getText(y).length()));
-        cursor.setCursorPosition(cursorX+Constants.CELL_WIDTH+2, (y+1)*Constants.CELL_HEIGHT);
+        if(fm == null)
+            return 0;
+        return fm.stringWidth(lineText.substring(0, textArea.getText(y).length()));
+    }
+
+    
+    public Integer getHeight(){
+        if(fm == null)
+            return 0;
+        return fm.getHeight();
     }
 
     public void paint(Graphics g) {
         //g.setFont(new Font("Arial", Font.PLAIN, 22)); 
         for(int i=0;i<textArea.getLines().size();i++){
             g.setFont(new Font("Monospaced", Font.PLAIN, 16));
-            g.drawString(textArea.getText(i).toString(),Constants.CELL_WIDTH,(i+2)*Constants.CELL_HEIGHT);
+            g.drawString(textArea.getText(i).toString(),Constants.CELL_WIDTH,(i+1)*getHeight());
         }
-        g.drawRect(x, y, Constants.PANEL_WIDTH, Constants.PANEL_HEIGHT);
         if(fm == null){
             Font font = g.getFont();
             fm = g.getFontMetrics(font);

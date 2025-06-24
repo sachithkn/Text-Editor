@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TextArea {
 
-    private ArrayList<StringBuilder> lines;
+    private ArrayList<StringBuffer> lines;
 
     public TextArea(){
         lines = new ArrayList<>();
@@ -16,11 +16,11 @@ public class TextArea {
     }
     
     public void addLine() {
-        lines.add(new StringBuilder());
+        lines.add(new StringBuffer());
     }
     
     public void deleteText(int length,int line) {
-        StringBuilder text  = lines.get(line);
+        StringBuffer text  = lines.get(line);
         if (length > 0 && length <= text.length()) {
             text.delete(text.length() - length, text.length());
         }
@@ -30,11 +30,12 @@ public class TextArea {
         return lines.get(line).toString();
     }
     
-    public ArrayList<StringBuilder> getLines() {
+    public ArrayList<StringBuffer> getLines() {
         return lines;
     }
 
     public void clear(int line) {
         lines.get(line).setLength(0);
     }
+
 }

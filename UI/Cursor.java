@@ -3,10 +3,7 @@ package UI;
 import java.awt.Graphics;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.JPanel;
-
-import utils.Constants;
 
 public class Cursor {
     private int cursorX = 5;
@@ -15,10 +12,8 @@ public class Cursor {
     private boolean isVisible;
     private Timer timer;
     private long blinkRate = 500; 
-    private JPanel jPanel;
 
     public Cursor(JPanel jPanel) {
-        this.jPanel = jPanel;
         this.isVisible = true; // Cursor is visible by default
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -28,6 +23,10 @@ public class Cursor {
                 jPanel.repaint();
             }            
         }, blinkRate,blinkRate);
+    }
+
+    public void setCursorHeight(int cursorHeight){
+        this.cursorHeight = cursorHeight - 5;
     }
 
     public void setCursorPosition(int x, int y) {
